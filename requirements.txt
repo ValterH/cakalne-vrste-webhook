@@ -1,0 +1,8 @@
+Django==2.0.3
+pew==1.1.2
+pipenv==11.0.2
+psutil==5.3.1
+pytz==2018.3
+virtualenv==15.1.0
+virtualenv-clone==0.3.0
+whitenoise==3.3.1
