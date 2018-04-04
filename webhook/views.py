@@ -12,7 +12,9 @@ def index(request):
         urgencyId = parameters['urgency']
 
         speech = "ProcedureId: " + procedureId + " regionId: " + regionId + " urgencyId: " + urgencyId
-        response = '{"speech": ' + speech + ',"displayText": '+ speech +',"source": "webhook"}'
+        r = {"speech":  speech,"displayText": speech,"source": "webhook"}
+        res = json.dumps(r)
+        response = json.loads(res)
         return HttpResponse(response)
     else:
         return HttpResponse("Method not allowed")
