@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse
+import json
 @csrf_exempt
 def index(request):
     if request.method == 'POST':
@@ -8,7 +9,14 @@ def index(request):
         procedureId = parameters.get('procedure')
         urgencyId = parameters.get('urgency')
 
-        return HttpResponse("{'speech':'', 'displayText':'', 'source':'webhook'}")
+        speech = "ProcedureId: " + procedureId + " regionId: " + regionId + " urgencyId: " + urgencyId
+        return {
+            "speech": speech,
+            "displayText": speech,
+            # "data": data,
+            #"contextOut": [],
+            "source": "webhook"
+    }
     else:
         return HttpResponse("Method not allowed")
 # Create your views here.
