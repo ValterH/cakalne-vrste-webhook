@@ -7,7 +7,7 @@ def index(request):
         procedureId = parameters.get('procedure')
         urgencyId = parameters.get('urgency')
 
-        return HttpResponse("{'speech':'', 'displayText':'', 'source':'webhook'}")
+        return HttpResponse("{'speech':'A', 'displayText':'A', 'source':'webhook'}")
     else:
         return HttpResponse("Method not allowed")
 # Create your views here.
