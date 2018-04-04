@@ -14,8 +14,15 @@ def index(request):
         speech = "ProcedureId: " + procedureId + " regionId: " + regionId + " urgencyId: " + urgencyId
         r = {"speech":  speech,"displayText": speech,"source": "webhook"}
         res = json.dumps(r)
-        response = json.loads(res)
-        return HttpResponse(response)
+        print(speech)
+
+        return HttpResponse( {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-weather-webhook-sample"
+        })
     else:
         return HttpResponse("Method not allowed")
 # Create your views here.
