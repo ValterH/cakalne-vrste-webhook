@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 @csrf_exempt
@@ -12,17 +13,8 @@ def index(request):
         urgencyId = parameters['urgency']
 
         speech = "ProcedureId: " + procedureId + " regionId: " + regionId + " urgencyId: " + urgencyId
-        r = {"speech":  speech,"displayText": speech,"source": "webhook"}
-        res = json.dumps(r)
-        print(speech)
 
-        return HttpResponse( {
-        "speech": speech,
-        "displayText": speech,
-        # "data": data,
-        # "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
-        })
+        return JsonResponse( {"speech": speech, "displayText": speech, "source": "apiai-weather-webhook-sample"})
     else:
         return HttpResponse("Method not allowed")
 # Create your views here.
