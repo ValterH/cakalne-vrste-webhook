@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse
+@csrf_exempt
 def index(request):
     if request.method == 'POST':
         result = request.POST.get('result')
