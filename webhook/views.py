@@ -1,12 +1,10 @@
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import json
-##########
-from selenium import webdriver
 from bs4 import BeautifulSoup
+import requests
+import json
 import re
-import os
 
 @csrf_exempt
 def index(request):
@@ -18,35 +16,18 @@ def index(request):
         procedureId = int(parameters['procedure'])
         urgencyId = int(parameters['urgency'])
 
-        #query = firstfive(scrape(procedureId, urgencyId, regionId))
-        speech = procedureId +" "+ urgencyId +" "+ regionId #dataToStr(query)
+        query = firstfive(scrape(procedureId, urgencyId, regionId))
+        speech = dataToStr(query)
 
         return JsonResponse( {"speech": speech, "displayText": speech, "source": "apiai-weather-webhook-sample"})
     else:
         return HttpResponse("Method not allowed")
 
-##################################################################################################################
 def scrape(pro, urg, reg):
-        chrome_options = Options()
-        chrome_options.binary_location = GOOGLE_CHROME_BIN
-        chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--no-sandbox')
-        driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
-        driver.get("https://cakalnedobe.ezdrav.si")
-        js = "document.getElementById('procedureId').value = '" + str(pro) + "';"
-        driver.execute_script(js)
-   
-        urgency = driver.find_element_by_id("urgencyTypeIdP")
-        urgencies = urgency.find_elements_by_tag_name('option')
-        urgencies[urg].click()
-  
-        region = driver.find_element_by_id("regionId")
-        regions = region.find_elements_by_tag_name('option')
-        regions[reg].click()
-  
-        driver.find_element_by_id("btnProcedureSubmit").click()
+        d = {'procedureId': pro, 'urgencyTypeIdp': urg, 'regionId': reg, 'btnProcedureSubmit': ''}
+        req = requests.post("https://cakalnedobe.ezdrav.si/Home/ProcedureAppointmentSlots", data=d)
         
-        html = driver.page_source
+        html = req.text
         soup = BeautifulSoup(html,"html.parser")
         klinike = soup.find_all('div',{"class":"col-md-10 col-md-offset-1 well"})
         p = soup.find('h4')
@@ -90,11 +71,10 @@ def scrape(pro, urg, reg):
             if(ne): email.append("ni podan")
             c+=1
             
-        driver.quit()
         err = ""
         if ime == []:
             err = soup.find('div',{"class":"col-md-12 error message-error"}).text.strip()
-        driver.quit()
+        
         return [postopek, ime,okvirni_termin,cakalna_doba,telefon,email,err]
 
 def firstfive(data):
