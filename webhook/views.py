@@ -18,7 +18,7 @@ def index(request):
         procedureId = int(parameters['procedure'])
         urgencyId = int(parameters['urgency'])
 
-        query = firstfive(scrape(procedureId, urgencyId, regionId))
+        #query = firstfive(scrape(procedureId, urgencyId, regionId))
         speech = procedureId +" "+ urgencyId +" "+ regionId #dataToStr(query)
 
         return JsonResponse( {"speech": speech, "displayText": speech, "source": "apiai-weather-webhook-sample"})
