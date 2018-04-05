@@ -9,7 +9,7 @@ verify_ssl = true
 dj-database-url = "*"
 django = "*"
 gunicorn = "*"
-psycopg2 = "*"
+"psycopg2" = "*"
 requests = "*"
 
 
