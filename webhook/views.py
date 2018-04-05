@@ -84,15 +84,16 @@ def firstfive(data):
             return [data[0],data[1][:6],data[2][:6],data[3][:6],data[4][:6],data[5][:6]]
 
 def dataToStr(data):
-        r =[]
-        r.append(str(data[0]))
-        r.append("")
-        if(len(data)>1):
+    r =r""
+    r += str(data[0]) + '\n'
+    r += '\n'
+    if(len(data)>1):
             for i, n in enumerate(data[1]):
-                r.append(str(data[1][i]))
-                r.append(str(data[2][i]))
-                r.append(str(data[3][i]))
-                r.append(str(data[4][i]))
-                r.append(str(data[5][i]))
-                r.append("")
-        return "\n".join(r)
+                r += str(data[1][i]) + '\n'
+                r += str(data[2][i]) + '\n'
+                r += str(data[3][i]) + '\n'
+                r += str(data[4][i]) + '\n'
+                r += str(data[5][i]) + '\n'
+                r += '\n'
+    print(r)
+    return r
