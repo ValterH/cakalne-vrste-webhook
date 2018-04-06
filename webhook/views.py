@@ -12,9 +12,11 @@ def index(request):
         data = json.loads(request.body)
         result = data['result']
         parameters = result['parameters']
-        regionId = int(parameters['region'])
-        procedureId = int(parameters['procedure'])
-        urgencyId = int(parameters['urgency'])
+        regionId = parameters['region']
+        procedureId = parameters['procedure']
+        urgencyId = parameters['urgency']
+        
+        if(regionId == "A"): regionId = ""
 
         query = firstfive(scrape(procedureId, urgencyId, regionId))
         speech = dataToStr(query)
