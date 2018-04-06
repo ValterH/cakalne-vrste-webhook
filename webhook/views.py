@@ -10,8 +10,8 @@ import re
 def index(request):
     if request.method == 'POST':
         data = get_data(request)
-
-        if(data[3] != None ): return JsonResponse( {"speech": "Izberi poseg", "displayText": "izberi poseg", "source": "apiai-weather-webhook-sample"})
+        if(data[3] != "" ): return JsonResponse( {"speech": "Izberi poseg", "displayText": "izberi poseg", "source": "apiai-weather-webhook-sample"})
+        if(data[0] == ""): return JsonResponse( {"speech": "Kateri poseg iščete?", "displayText": "Kateri poseg iščete?", "source": "apiai-weather-webhook-sample"})
         if(data[2] == "A"): data[2] = ""
 
         query = firstfive(scrape(data[0],data[1],data[2]))
