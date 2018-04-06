@@ -9,21 +9,22 @@ import re
 @csrf_exempt
 def index(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        result = data['result']
-        parameters = result['parameters']
-        regionId = parameters['region']
-        procedureId = parameters['procedure']
-        urgencyId = parameters['urgency']
-        
-        if(regionId == "A"): regionId = ""
+        data = get_data(request)
 
-        query = firstfive(scrape(procedureId, urgencyId, regionId))
+        if(data[3] != ""): return JsonResponse( {"speech": "Izberi poseg", "displayText": "izberi poseg", "source": "apiai-weather-webhook-sample"})
+        if(data[2] == "A"): data[2] = ""
+
+        query = firstfive(scrape(data[0],data[1],data[2]))
         speech = dataToStr(query)
 
         return JsonResponse( {"speech": speech, "displayText": speech, "source": "apiai-weather-webhook-sample"})
     else:
         return HttpResponse("Method not allowed")
+def get_data(request):
+    data = json.loads(request.body)
+    result = data['result']
+    parameters = result['parameters']
+    return [parameters['procedure'],parameters['urgency'],parameters['region'],parameters['procedure_group']]
 
 def scrape(pro, urg, reg):
         d = {'procedureId': pro, 'urgencyTypeIdp': urg, 'regionId': reg, 'btnProcedureSubmit': ''}
