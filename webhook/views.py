@@ -24,7 +24,7 @@ def get_data(request):
     data = json.loads(request.body)
     result = data['result']
     parameters = result['parameters']
-    return [parameters['procedure'],parameters['urgency'],parameters['region'],parameters['procedure_group']]
+    return [parameters['procedure'],parameters['urgency'],parameters['region'],parameters['group']]
 
 def scrape(pro, urg, reg):
         d = {'procedureId': pro, 'urgencyTypeIdp': urg, 'regionId': reg, 'btnProcedureSubmit': ''}
