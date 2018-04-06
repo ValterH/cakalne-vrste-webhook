@@ -10,7 +10,9 @@ import re
 def index(request):
     if request.method == 'POST':
         data = get_data(request)
-        if(data[3] != "" and data[0] == ""): return JsonResponse( {"speech": "Izberi poseg", "displayText": "izberi poseg",})
+        if(data[3] != "" and data[0] == ""): 
+            speech = izberi_poseg(data[3])
+            return JsonResponse( {"speech": speech, "displayText": speech,})
         if(data[0] == ""): return JsonResponse( {"speech": "Kateri poseg iščete?", "displayText": "Kateri poseg iščete?"})
         if(data[2] == "A"): data[2] = ""
 
@@ -20,6 +22,11 @@ def index(request):
         return JsonResponse( {"speech": speech, "displayText": speech})
     else:
         return HttpResponse("Method not allowed")
+
+def izberi_poseg(group):
+    #hardcoded
+    return "izberi: \nhead rentgen\nMR of the head without contrast\nMR of the head with contrast\nspectroscopy of the head\nultrasound of the head\nultrasound of a childs head"
+
 def get_data(request):
     data = json.loads(request.body)
     result = data['result']
