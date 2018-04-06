@@ -10,14 +10,26 @@ import re
 def index(request):
     if request.method == 'POST':
         data = get_data(request)
-        if(data[3] != "" ): return JsonResponse( {"speech": "Izberi poseg", "displayText": "izberi poseg", "source": "apiai-weather-webhook-sample"})
-        if(data[0] == ""): return JsonResponse( {"speech": "Kateri poseg iščete?", "displayText": "Kateri poseg iščete?", "source": "apiai-weather-webhook-sample"})
+        if(data[3] != "" and data[0] == ""): return JsonResponse( {"speech": "Izberi poseg", 
+                                                  "displayText": "izberi poseg",
+                                                  "outputContexts": [{"name": "projects/${PROJECT_ID}/agent/sessions/${SESSION_ID}/contexts/get_data",
+                                                                      "lifespanCount": 5}]
+                                                  })
+        if(data[0] == ""): return JsonResponse( {"speech": "Kateri poseg iščete?",
+                                                "displayText": "Kateri poseg iščete?",
+                                                "outputContexts": [{"name": "projects/${PROJECT_ID}/agent/sessions/${SESSION_ID}/contexts/get_data",
+                                                                      "lifespanCount": 0}]
+                                                })
         if(data[2] == "A"): data[2] = ""
 
         query = firstfive(scrape(data[0],data[1],data[2]))
         speech = dataToStr(query)
 
-        return JsonResponse( {"speech": speech, "displayText": speech, "source": "apiai-weather-webhook-sample"})
+        return JsonResponse( {"speech": speech, 
+                              "displayText": speech,
+                              "outputContexts": [{"name": "projects/${PROJECT_ID}/agent/sessions/${SESSION_ID}/contexts/get_data",
+                                                  "lifespanCount": 0}]
+                              })
     else:
         return HttpResponse("Method not allowed")
 def get_data(request):
