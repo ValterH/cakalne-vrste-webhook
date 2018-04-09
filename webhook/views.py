@@ -27,7 +27,7 @@ def izberi_poseg(group):
                            "MR of the head with contrast","spectroscopy of the head",
                            "ultrasound of the head","ultrasound of a childs head"]}
     res = "izberi:\n"
-    for procedure in groups['group']:
+    for procedure in groups[group]:
         res += procedure + "\n"
     return res
 
