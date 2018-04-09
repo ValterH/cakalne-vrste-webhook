@@ -15,7 +15,6 @@ def index(request):
             return JsonResponse( {"speech": speech, "displayText": speech,})
         if(data[0] == ""): return JsonResponse( {"speech": "Kateri poseg iščete?", "displayText": "Kateri poseg iščete?"})
         if(data[2] == "A"): data[2] = ""
-
         query = firstfive(scrape(data[0],data[1],data[2]))
         speech = dataToStr(query)
 
@@ -24,8 +23,13 @@ def index(request):
         return HttpResponse("Method not allowed")
 
 def izberi_poseg(group):
-    #hardcoded
-    return "izberi: \nhead rentgen\nMR of the head without contrast\nMR of the head with contrast\nspectroscopy of the head\nultrasound of the head\nultrasound of a childs head"
+    groups = {'head scan':["head rentgen","MR of the head without contrast",
+                           "MR of the head with contrast","spectroscopy of the head",
+                           "ultrasound of the head","ultrasound of a childs head"]}
+    res = "izberi:\n"
+    for procedure in groups['group']:
+        res += procedure + "\n"
+    return res
 
 def get_data(request):
     data = json.loads(request.body)
@@ -35,8 +39,8 @@ def get_data(request):
 
 def scrape(pro, urg, reg):
         d = {'procedureId': pro, 'urgencyTypeIdp': urg, 'regionId': reg, 'btnProcedureSubmit': ''}
+        # request traja dolgo
         req = requests.post("https://cakalnedobe.ezdrav.si/Home/ProcedureAppointmentSlots", data=d)
-        
         html = req.text
         soup = BeautifulSoup(html,"html.parser")
         klinike = soup.find_all('div',{"class":"col-md-10 col-md-offset-1 well"})
