@@ -76,13 +76,13 @@ def scrape(pro, urg, reg):
                     ne = False
                     email.append(et)
                 
-                tel = re.findall(r'[\+\]?[1-9][0-9 .\-\(\)]{8,}[0-9]', et)
+                tel = re.findall(r'[\+\]?[1-9][0-9 \-\(\)]{8,}[0-9]', et)
                 if(len(tel)>0):
                     telefon.append(et)
                     nt = False
                     break
-            if(nt): telefon.append("ni podan")
-            if(ne): email.append("ni podan")
+            if(nt): telefon.append("telefon ni podan")
+            if(ne): email.append("email ni podan")
             c+=1
             
         err = ""
