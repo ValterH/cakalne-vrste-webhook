@@ -23,9 +23,13 @@ def index(request):
         return HttpResponse("Method not allowed")
 
 def izberi_poseg(group):
-    groups = {'head scan':["rentgen glave","MR glave(kontrast)",
-                           "MR glave (brez kontrasta)","spektroskopija glave",
-                           "ultrazvok glave","ultrazvok otroške glave"]}
+    groups = {'head scan':["rentgen glave",
+                           "MR glave(kontrast)",
+                           "MR glave (brez kontrasta)",
+                           "spektroskopija glave",
+                           "ultrazvok glave",
+                           "ultrazvok otroške glave"]
+              }
     res = "izberi:\n"
     for procedure in groups[group]:
         res += procedure + "\n"
