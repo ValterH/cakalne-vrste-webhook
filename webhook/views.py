@@ -23,10 +23,15 @@ def index(request):
         return HttpResponse("Method not allowed")
 
 def izberi_poseg(group):
-    groups = {'head scan':["rentgen glave",
+    groups = {'head scan':["CT glave(kontrast)",
+                           "CT glave(brez kontrasta)",
+                           "CT skeleta glave",
+                           "CT skeleta glave(kontrast)",
+                           "DTR glave"
                            "MR glave(kontrast)",
                            "MR glave (brez kontrasta)",
-                           "spektroskopija glave",
+                           "MR spektroskopija glave",
+                           "rentgen glave",
                            "ultrazvok glave",
                            "ultrazvok otroške glave"]
               }
