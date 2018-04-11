@@ -8,7 +8,6 @@ import re
 
 @csrf_exempt
 def index(request):
-    print(request.url)
     if request.method == 'POST':
         data = get_data(request)
         if(data[3] != "" and data[0] == ""): 
