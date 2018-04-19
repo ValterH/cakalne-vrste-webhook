@@ -8,7 +8,11 @@ import json
 import re
 
 @csrf_exempt
+<<<<<<< HEAD
 def webhook(request):
+=======
+def index(request):
+>>>>>>> 4889137c9afbc77ec3b998fb8facffca04a44ac4
     if request.method == 'POST':
         data = get_data(request)
         if(data[3] != "" and data[0] == ""): 
